@@ -1,4 +1,8 @@
-# on one EC-2 window, type the following:
+# Step Zero: Prep Your Environment!
+
+## Prep the EC-2 instance
+SSH into your EC-2 instance, then type the following line-by-line:
+```bash
 sudo apt update
 sudo apt install zip
 sudo apt-get install gcc
@@ -17,34 +21,50 @@ source ~/.bashrc
 pip install kafka-python
 wget http://apache-mirror.8birdsvideo.com/kafka/2.3.0/kafka_2.12-2.3.0.tgz
 tar -xzf kafka_2.12-2.3.0.tgz
+```
 
-# ADD THE FOLLOWING TO YOUR ~/.bashrc:
-# --------------
+Add the following to your `~/.bashrc` file:
+```bash
 # for kafka installation
 export PATH=/home/ubuntu/kafka_2.12-2.3.0/bin:$PATH
-# --------------
+```
+
+Then run the following to make sure that `$PATH` adjustment actually applies:
+```bash
 source ~/.bashrc
+```
 
-# set up Github properly to clone the repo:
+## Grab the code
+Use a guide such as [this](https://medium.com/digitalcrafts/how-to-set-up-an-ec2-instance-with-github-node-js-and-postgresql-e363cb771826) to establish your Github credentials on the EC-2 instance, then run the following command to grab the code:
+```bash
 git clone https://github.com/nathancooperjones/python-kafka-spark-kafka-bigquery-trump.git
+```
 
-# set up BigQuery credentials with this guide:
-# https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries
+Use a guide such as [this] (https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries) to set up your Google credentials.
 
-# You will need four EC2 windows open, either by making new tabs or using tmux.
-# We will refer to these windows as EC2-1, EC2-2, EC2-3, and EC2-4.
 
-# EC2-1:
+## Run the code
+You will need four EC2 windows open, either by making new tabs or using `tmux`. We will refer to these windows as EC2-1, EC2-2, EC2-3, and EC2-4.
+
+**EC2-1:**
+```bash
 zookeeper-server-start.sh config/zookeeper.properties &
 # press *Enter* until prompt returns
 kafka-server-start.sh config/server.properties &
 # press *Enter* until prompt returns
+```
 
-# EC2-2:
+**EC2-2:**
+```bash
 python kafka_1_to_kafka_2.py
+```
 
-# EC2-3:
+**EC2-3:**
+```bash
 python kafka_2_to_bigquery.py
+```
 
-# EC2-4:
+**EC2-4:**
+```bash
 python user_to_kafka_1.py
+```
