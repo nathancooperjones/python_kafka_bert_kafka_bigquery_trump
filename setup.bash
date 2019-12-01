@@ -1,6 +1,7 @@
 # on one EC-2 window, type the following:
 sudo apt update
 sudo apt install zip
+sudo apt-get install gcc
 
 # we want to install Java for Kafka and Spark
 sudo apt install default-jre
@@ -24,10 +25,23 @@ export PATH=/home/ubuntu/kafka_2.12-2.3.0/bin:$PATH
 # --------------
 source ~/.bashrc
 
-# Set up is officially complete!
+# set up Github properly to clone the repo:
+git clone https://github.com/nathancooperjones/python-kafka-spark-kafka-bigquery-trump.git
 
-# Now let's start the project!
+# You will need four EC2 windows open, either by making new tabs or using tmux.
+# We will refer to these windows as EC2-1, EC2-2, EC2-3, and EC2-4.
 
-EC2-1:
+# EC2-1:
 zookeeper-server-start.sh config/zookeeper.properties &
+# *Enter*
 kafka-server-start.sh config/server.properties &
+# *Enter*
+
+# EC2-2:
+python kafka_1_to_kafka_2.py
+
+# EC2-3:
+python kafka_2_to_bigquery.py
+
+# EC2-4:
+python user_to_kafka_1.py
