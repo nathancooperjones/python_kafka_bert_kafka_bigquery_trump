@@ -1,3 +1,5 @@
 google-cloud-bigquery
+joblib
 kafka-python
 sentence-transformers
+sklearn

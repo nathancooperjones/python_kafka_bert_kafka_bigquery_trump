@@ -1,0 +1,5 @@
+# no data to Github, please
+*.json
+
+# no Jupyter notebook checkpoints - why would I want this
+*.ipynb_checkpoints*

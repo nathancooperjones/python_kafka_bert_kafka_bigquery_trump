@@ -5,9 +5,9 @@ from google.cloud import bigquery
 # https://github.com/googleapis/google-cloud-python/blob/c7cf8ef445370aff574cc0f83befb46f227e5edc/bigquery/docs/snippets.py
 
 client = bigquery.Client()
-filename = 'trump_tweets_cleaned.json'
+filename = '../trump_tweets_cleaned.json'
 dataset_id = 'trump_tweets'
-table_id = 'trump_tweets_1201'
+table_id = 'trump_tweets_1201_pca'
 
 dataset_ref = client.dataset(dataset_id)
 table_ref = dataset_ref.table(table_id)
