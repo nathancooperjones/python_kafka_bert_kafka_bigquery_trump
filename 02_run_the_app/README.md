@@ -14,8 +14,7 @@ kafka-server-start.sh config/server.properties &
 
 ### EC2-2:
 ```bash
-# python 02_kafka_1_to_kafka_2.py
-/home/ubuntu/spark-2.4.4-bin-hadoop2.7/bin/spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.4.4.jar 02_kafka_1_to_kafka_2.py
+python 02_kafka_1_to_kafka_2.py
 ```
 
 ### EC2-3:

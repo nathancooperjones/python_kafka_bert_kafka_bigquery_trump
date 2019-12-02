@@ -1,3 +1,4 @@
+import asyncio
 import json
 
 from google.cloud import bigquery
@@ -17,7 +18,8 @@ table_id = 'trump_tweets_1201_pca_150_results_table'
 table_ref = client.dataset(dataset_id).table(table_id)
 table = client.get_table(table_ref)
 
-for msg in consumer:
+
+async def find_similar_sentence_and_publish(msg):
     sentence_to_encode = msg.value['sentence_to_encode']
     sentence_embedding = msg.value['sentence_embedding']
 
@@ -62,10 +64,11 @@ for msg in consumer:
     )
 
     result = list(query_job.result())[0]  # `TypeError: 'RowIterator' object is not an iterator` is hilarious
+
+    print(result)
+
     similar_trump_tweet = result.get('similar_article_title')
     similarity = result.get('similarity')
-
-    print(similar_trump_tweet)
 
     query = (
         """
@@ -79,3 +82,6 @@ for msg in consumer:
         query,
         location="US",
     )
+
+for msg in consumer:
+    asyncio.run(find_similar_sentence_and_publish(msg))

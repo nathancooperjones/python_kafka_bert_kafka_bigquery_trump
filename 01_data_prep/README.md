@@ -12,4 +12,10 @@ aws cp s3://recycling-classification/trump_tweets_cleaned.json .
 aws cp s3://recycling-classification/pca_150.joblib .
 ```
 
-Once this is done, configure `02_data_to_bigquery.py` with your own BigQuery table information, then run that file to upload the JSON file to BigQuery.
+Once this is done, configure `02_data_to_bigquery.py` and `03_create_results_tables.py` with your own BigQuery table information, then run those files to upload the JSON file to BigQuery and create results tables:
+
+```bash
+python 02_data_to_bigquery.py
+# this may take a while to upload...
+python 03_create_results_tables.py
+```

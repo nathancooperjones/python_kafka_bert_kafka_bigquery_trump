@@ -1,5 +1,8 @@
 # Step Zero: Prep Your Environment!
 
+## Get an EC-2 instance
+I recommend selecting a **Ubuntu 18.04 Amazon Machine Image (AMI)** of type **t3a.xlarge** with at least **16GB** of storage.
+
 ## Prep the EC-2 instance
 SSH into your EC-2 instance, then type the following line-by-line:
 ```bash
@@ -10,9 +13,6 @@ sudo apt-get install gcc
 # we want to install Java for Kafka and Spark
 sudo apt install default-jre
 sudo apt install default-jdk
-
-# ... and I guess Scala...
-sudo apt-get install scala
 
 # we want to install Miniconda to take care of all our Python problems without
 # being the smothering idiot that Anaconda is
@@ -31,20 +31,6 @@ Add the following to your `~/.bashrc` file:
 export PATH=/home/ubuntu/kafka_2.12-2.3.0/bin:$PATH
 ```
 
-Installing PySpark is a bit more difficult. First, navigate to [Maven Cental's website](https://search.maven.org/search?q=spark-streaming-kafka-0-8-assembly) and download ` spark-streaming-kafka-0-8-assembly_2.11-2.4.4.jar`. `scp` this file to your EC-2 instance.
-```bash
-wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
-tar -xzf spark-2.4.4-bin-hadoop2.7.tgz
-```
-
-Add the following to your `~/.bashrc` file:
-```bash
-# for Spark installation
-export SPARK_HOME='/home/ubuntu/spark-2.4.4-bin-hadoop2.7'
-export PATH=$SPARK_HOME:$PATH
-export PYTHONPATH=$SPARK_HOME/python:$PYTHONPATH
-```
-
 Then run the following to make sure that `$PATH` adjustment actually applies:
 ```bash
 source ~/.bashrc
@@ -58,31 +44,4 @@ cd python-kafka-spark-kafka-bigquery-trump/
 pip install -r requirements.txt
 ```
 
-Use a guide such as [this] (https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries) to set up your Google credentials.
-
-
-## Run the code
-You will need four EC2 windows open, either by making new tabs or using `tmux`. We will refer to these windows as EC2-1, EC2-2, EC2-3, and EC2-4.
-
-**EC2-1:**
-```bash
-zookeeper-server-start.sh config/zookeeper.properties &
-# press *Enter* until prompt returns
-kafka-server-start.sh config/server.properties &
-# press *Enter* until prompt returns
-```
-
-**EC2-2:**
-```bash
-python kafka_1_to_kafka_2.py
-```
-
-**EC2-3:**
-```bash
-python kafka_2_to_bigquery.py
-```
-
-**EC2-4:**
-```bash
-python user_to_kafka_1.py
-```
+Use a guide such as [this](https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries) to set up your Google credentials.

@@ -1,5 +1,8 @@
 # no data to Github, please
 *.json
 
+# no Joblib dumps
+*.joblib
+
 # no Jupyter notebook checkpoints - why would I want this
 *.ipynb_checkpoints*

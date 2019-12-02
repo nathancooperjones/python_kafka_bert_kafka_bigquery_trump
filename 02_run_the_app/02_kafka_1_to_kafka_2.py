@@ -1,22 +1,26 @@
-from pyspark import SparkContext
-from pyspark.streaming import StreamingContext
-from pyspark.streaming.kafka import KafkaUtils
+import asyncio
+import json
+
+from kafka import KafkaConsumer, KafkaProducer
+from sentence_transformers import SentenceTransformer
 
 
-if __name__ == "__main__":
-    sc = SparkContext(appName='PythonStreamingDirectKafkaTweet')
-    sc.setLogLevel('ERROR')
-    ssc = StreamingContext(sc, 1)  # 1 second for now
+consumer = KafkaConsumer('sentence_to_kafka_1',
+                         bootstrap_servers='localhost:9092',
+                         value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+producer = KafkaProducer(bootstrap_servers='localhost:9092',
+                         value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+model = SentenceTransformer('bert-base-nli-mean-tokens')
 
-    brokers = 'localhost:9092'
-    topic = 'sentence_to_kafka_1'
 
-    kvs = KafkaUtils.createDirectStream(ssc, [topic], {'metadata.broker.list': brokers})
-    lines = kvs.map(lambda x: x['sentence_to_encode'])
-    lines.pprint()
+async def encode_and_send(msg):
+    sentence_to_encode = msg.value['sentence_to_encode']
+    encoded_sentence = model.encode([sentence_to_encode])[0].tolist()
+    sentence_json = {'sentence_to_encode': sentence_to_encode,
+                     'sentence_embedding': encoded_sentence}
+    print(sentence_json)
+    producer.send('kafka_1_to_kafka_2', sentence_json)
 
-    counts = lines.map(lambda word: (word, 1))
-    counts.pprint()
 
-    ssc.start()
-    ssc.awaitTermination()
+for msg in consumer:
+    asyncio.run(encode_and_send(msg))
