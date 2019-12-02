@@ -1,5 +1,6 @@
 google-cloud-bigquery
 joblib
 kafka-python
+pyspark
 sentence-transformers
 sklearn
