@@ -6,3 +6,12 @@
 
 # no Jupyter notebook checkpoints - why would I want this
 *.ipynb_checkpoints*
+
+# no ridiculously pointless .DS_Stores
+.DS_Store
+
+# no pycache
+*__pycache__*
+
+# no egg info
+*.egg-info

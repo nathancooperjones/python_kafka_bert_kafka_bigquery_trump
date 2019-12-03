@@ -1,4 +1,6 @@
 from google.cloud import bigquery
+from python_kafka_bert_kafka_bigquery_trump.config import (QUERY_TABLE_ID, RESULTS_TABLE_ID)
+
 
 schema = [
     bigquery.SchemaField('text', 'STRING', mode='NULLABLE'),
@@ -7,9 +9,7 @@ schema = [
 
 client = bigquery.Client()
 
-table_id = 'nates-projects.trump_tweets.trump_tweets_1201_pca_150_results_table'
-
-table = bigquery.Table(table_id, schema=schema)
+table = bigquery.Table(RESULTS_TABLE_ID, schema=schema)
 table = client.create_table(table)
 print(
     'Created table {}.{}.{}'.format(table.project, table.dataset_id, table.table_id)
@@ -26,9 +26,7 @@ schema = [
 
 client = bigquery.Client()
 
-table_id = 'nates-projects.trump_tweets.trump_tweets_1201_pca_150_query_table'
-
-table = bigquery.Table(table_id, schema=schema)
+table = bigquery.Table(QUERY_TABLE_ID, schema=schema)
 table = client.create_table(table)
 print(
     'Created table {}.{}.{}'.format(table.project, table.dataset_id, table.table_id)

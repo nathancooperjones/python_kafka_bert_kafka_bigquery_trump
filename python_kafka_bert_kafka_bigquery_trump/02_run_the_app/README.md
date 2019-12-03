@@ -2,7 +2,9 @@
 
 The hard part is done - everything is installed and downloaded. Let's have some fun now!
 
-To properly run this application, it is recommended you have four EC-2 windows open, either through new tabs or a tool like `tmux`. We will refer to these windows as **EC2-1**, **EC2-2**, **EC2-3**, and **EC2-4**.
+Ensure you configured `config.py` with your own information.
+
+To properly run this application, it is recommended you have four EC2 windows open, either through new tabs or a tool like `tmux`. We will refer to these windows as **EC2-1**, **EC2-2**, **EC2-3**, and **EC2-4**.
 
 ### EC2-1:
 ```bash

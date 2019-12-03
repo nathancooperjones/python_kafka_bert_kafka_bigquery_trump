@@ -1,10 +1,10 @@
 # Step Zero: Prep Your Environment!
 
-## Get an EC-2 instance
+## Get an EC2 instance
 I recommend selecting a **Ubuntu 18.04 Amazon Machine Image (AMI)** of type **t3a.xlarge** with at least **16GB** of storage.
 
-## Prep the EC-2 instance
-SSH into your EC-2 instance, then type the following line-by-line:
+## Prep the EC2 instance
+SSH into your EC2 instance, then type the following line-by-line:
 ```bash
 sudo apt update
 sudo apt install zip
@@ -34,14 +34,6 @@ export PATH=/home/ubuntu/kafka_2.12-2.3.0/bin:$PATH
 Then run the following to make sure that `$PATH` adjustment actually applies:
 ```bash
 source ~/.bashrc
-```
-
-## Grab the code
-Use a guide such as [this](https://medium.com/digitalcrafts/how-to-set-up-an-ec2-instance-with-github-node-js-and-postgresql-e363cb771826) to establish your Github credentials on the EC-2 instance, then run the following command to grab the code:
-```bash
-git clone https://github.com/nathancooperjones/python-kafka-spark-kafka-bigquery-trump.git
-cd python-kafka-spark-kafka-bigquery-trump/
-pip install -r requirements.txt
 ```
 
 Use a guide such as [this](https://cloud.google.com/bigquery/docs/quickstarts/quickstart-client-libraries) to set up your Google credentials.

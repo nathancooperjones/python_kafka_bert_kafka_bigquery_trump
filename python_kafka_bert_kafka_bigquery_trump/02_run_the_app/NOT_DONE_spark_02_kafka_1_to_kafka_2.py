@@ -1,4 +1,5 @@
-# /home/ubuntu/spark-2.4.4-bin-hadoop2.7/bin/spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.4.4.jar 02_kafka_1_to_kafka_2.py
+# RUN with:
+# /home/ubuntu/spark-2.4.4-bin-hadoop2.7/bin/spark-submit --jars spark-streaming-kafka-0-8-assembly_2.11-2.4.4.jar 02_kafka_1_to_kafka_2.py  # noqa
 
 from pyspark import SparkContext
 from pyspark.streaming import StreamingContext
@@ -46,5 +47,13 @@ if __name__ == "__main__":
 #
 #     lines.foreachRDD(lambda rdd: predict(rdd))
 #
+
+# (lines.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
+#       .writeStream
+#       .format("kafka")
+#       .option("kafka.bootstrap.servers", "host1:port1,host2:port2")
+#       .option("topic", "topic1")
+#       .start())
+
 #     ssc.start()
 #     ssc.awaitTermination()

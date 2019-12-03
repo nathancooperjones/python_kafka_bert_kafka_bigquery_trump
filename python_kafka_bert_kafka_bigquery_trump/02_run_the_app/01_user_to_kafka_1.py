@@ -3,6 +3,7 @@ import json
 
 from google.cloud import bigquery
 from kafka import KafkaProducer
+from python_kafka_bert_kafka_bigquery_trump.config import QUERY_TABLE_ID
 
 
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
@@ -23,10 +24,10 @@ while True:
     while not query_results:
         query = (
             """
-            SELECT * FROM `nates-projects.trump_tweets.trump_tweets_1201_pca_150_query_table`
-            WHERE user_text LIKE "{0}"
+            SELECT * FROM `{0}`
+            WHERE user_text LIKE "{1}"
             LIMIT 1
-            """.format(sentence)
+            """.format(QUERY_TABLE_ID, sentence)
         )
         query_job = client.query(
             query,
